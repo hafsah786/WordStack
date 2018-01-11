@@ -59,12 +59,11 @@ public class StackedLayout extends LinearLayout {
 
     public View pop() {
         View popped = null;
-        /**
-         **
-         **  YOUR CODE GOES HERE
-         **
-         **/
-        AllTiles.removeFirst();
+        this.removeView(tiles.peek());
+        if (!tiles.isEmpty() ){
+            popped = tiles.pop();
+            this.addView(tiles.peek());
+        }
         return popped;
     }
 
@@ -77,10 +76,7 @@ public class StackedLayout extends LinearLayout {
     }
 
     public void clear() {
-        /**
-         **
-         **  YOUR CODE GOES HERE
-         **
-         **/
+       tiles.clear();
+       this.removeAllViews();
     }
 }

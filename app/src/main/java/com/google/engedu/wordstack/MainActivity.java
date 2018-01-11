@@ -203,31 +203,112 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         ViewGroup word1LinearLayout = (ViewGroup) findViewById(R.id.word1);
-        ViewGroup word2LinearLayout = (ViewGroup)findViewById(R.id.word1);
+        ViewGroup word2LinearLayout = (ViewGroup)findViewById(R.id.word2);
 
         savedInstanceState.putInt(word1, word1.length());
         savedInstanceState.putInt(word2,word2.length());
 
-        int count1 = word1LinearLayout.getChildCount();
 
-        while (count1 != 0 ){
-            savedInstanceState.putString(word1LinearLayout, word1LinearLayout.getChildAt(count1));
+        int count1 = 0 ;
+        String lettersPlayer1 = "";
 
-        }
-        Stack <View> getTiles = stackedLayout.getTiles();
-        while(stackedLayout.getChildCount() != 0){
-            savedInstanceState.
+        if (word1 != null){
+            savedInstanceState.putString("word1", word1);
         }
 
-        savedInstanceState.putString(word1LinearLayout, word1 );
-
-        savedInstanceState.putString(stackedLayout, word1);
-
-
-        if(savedInstanceState.getInt(word1)!= null){
-            this.word1 = savedInstanceState.getInt(word1);
+        if (word2 != null){
+            savedInstanceState.putString("word2", word2);
         }
+
+        if(word1LinearLayout != null) {
+            while (count1 != word1LinearLayout.getChildCount()) {
+                LetterTile current = (LetterTile) word1LinearLayout.getChildAt(count1);
+                String currentLetter = current.getLetter();
+                lettersPlayer1 += currentLetter;
+                count1++;
+
+            }
+            savedInstanceState.putString("word1LinearLayout", lettersPlayer1);
+        }
+
+        int count2 = 0 ;
+        String lettersPlayer2 = "";
+
+        if(word2LinearLayout != null) {
+
+            while (count2 != word2LinearLayout.getChildCount()) {
+                LetterTile current = (LetterTile) word2LinearLayout.getChildAt(count1);
+                String currentLetter = current.getLetter();
+                lettersPlayer2 += currentLetter;
+                count2++;
+
+            }
+            savedInstanceState.putString("word2LinearLayout", lettersPlayer2);
+        }
+
+
+
+            Stack<View> getTiles = stackedLayout.getTiles();
+            if(!getTiles.isEmpty()) {
+            String stackLetter = "";
+            int countStack = 0;
+
+            while (countStack != getTiles.size() ) {
+                LetterTile current = (LetterTile) stackedLayout.pop();
+                String currentLetter = current.getLetter();
+                stackLetter += currentLetter;
+                countStack++;
+
+            }
+            savedInstanceState.putString("stackedLayout", stackLetter);
+        }
+
+
+
         super.onSaveInstanceState(savedInstanceState);
 
     }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        ViewGroup word1LinearLayout = (ViewGroup) findViewById(R.id.word1);
+        ViewGroup word2LinearLayout = (ViewGroup) findViewById(R.id.word2);
+        String word1LL = savedInstanceState.getString("word1LinearLayout");
+        String word2LL = savedInstanceState.getString("word2LinearLayout");
+        String stackLayout = savedInstanceState.getString("stackedLayout");
+
+
+        if (savedInstanceState.getString("word1") != null ){
+            this.word1 = savedInstanceState.getString("word1");
+        }
+        if (savedInstanceState.getString("word2") != null ){
+            this.word2 = savedInstanceState.getString("word2");
+        }
+
+        if (savedInstanceState.getString("word1LinearLayout") != null ){
+            for (int i =0; i < word1LL.length(); i++){
+               LetterTile letter =  new LetterTile(this, word1LL.charAt(i));
+               word1LinearLayout.addView(letter);
+
+            }
+        }
+
+        if (savedInstanceState.getString("word2LinearLayout") != null ){
+            for (int i =0; i < word2LL.length(); i++){
+                LetterTile letter =  new LetterTile(this, word2LL.charAt(i));
+                word2LinearLayout.addView(letter);
+            }
+        }
+
+        if (savedInstanceState.getString("stackedLayout") != null ){
+            for (int i =0; i < stackLayout.length(); i++){
+                LetterTile letter =  new LetterTile(this, stackLayout.charAt(i));
+                stackedLayout.push(letter);
+            }
+        }
+
+        super.onRestoreInstanceState(savedInstanceState);
+    }
 }
+
+
