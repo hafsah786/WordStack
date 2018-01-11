@@ -68,18 +68,17 @@ public class LetterTile extends TextView {
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
-        if (!forzen && motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+        if (!frozen && motionEvent.getAction() == MotionEvent.ACTION_DOWN){
             startDrag(
-                    ClipData.newPlainText(
-                            
-                    )
-            )
+                    ClipData.newPlainText("",""),
+                    new View.DragShadowBuilder(this),
+                    this, 0
+
+                    );
+            return true;
+
         }
-        /**
-         **
-         **  YOUR CODE GOES HERE
-         **
-         **/
+
         return super.onTouchEvent(motionEvent);
     }
 }

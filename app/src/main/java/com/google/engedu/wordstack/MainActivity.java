@@ -198,4 +198,36 @@ public class MainActivity extends AppCompatActivity {
          **/
         return true;
     }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        ViewGroup word1LinearLayout = (ViewGroup) findViewById(R.id.word1);
+        ViewGroup word2LinearLayout = (ViewGroup)findViewById(R.id.word1);
+
+        savedInstanceState.putInt(word1, word1.length());
+        savedInstanceState.putInt(word2,word2.length());
+
+        int count1 = word1LinearLayout.getChildCount();
+
+        while (count1 != 0 ){
+            savedInstanceState.putString(word1LinearLayout, word1LinearLayout.getChildAt(count1));
+
+        }
+        Stack <View> getTiles = stackedLayout.getTiles();
+        while(stackedLayout.getChildCount() != 0){
+            savedInstanceState.
+        }
+
+        savedInstanceState.putString(word1LinearLayout, word1 );
+
+        savedInstanceState.putString(stackedLayout, word1);
+
+
+        if(savedInstanceState.getInt(word1)!= null){
+            this.word1 = savedInstanceState.getInt(word1);
+        }
+        super.onSaveInstanceState(savedInstanceState);
+
+    }
 }

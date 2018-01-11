@@ -20,11 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import java.util.LinkedList;
 import java.util.Stack;
 
 public class StackedLayout extends LinearLayout {
 
     private Stack<View> tiles = new Stack();
+
+    private LinkedList<View> AllTiles = new LinkedList<View>();
 
     public StackedLayout(Context context) {
         super(context);
@@ -35,16 +38,23 @@ public class StackedLayout extends LinearLayout {
         if(!tiles.isEmpty()){
             //View current = tiles.peek();
            // View letter = findViewById().findViewById(.id.);
-            ViewGroup parent = (ViewGroup) tiles.peek().getParent();
+           // ViewGroup parent = (ViewGroup) tiles.peek().this;
 
-            parent.removeAllViews();//View(tile);
+            this.removeAllViews();//View(tile);
             tiles.push(tile);
-            parent.addView(tile);
+            this.addView(tile);
         }
         else {
             tiles.push(tile);
+            this.addView(tile);
+
 
         }
+        AllTiles.addFirst(tile);
+    }
+
+    public Stack <View> getTiles(){
+        return tiles;
     }
 
     public View pop() {
@@ -54,6 +64,7 @@ public class StackedLayout extends LinearLayout {
          **  YOUR CODE GOES HERE
          **
          **/
+        AllTiles.removeFirst();
         return popped;
     }
 
